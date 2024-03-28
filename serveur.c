@@ -21,6 +21,8 @@
 #include "fon.h"     		/* Primitives de la boite a outils */
 
 #define SERVICE_DEFAUT "1111"
+#define NB_REQ_MAX 100//Nombre de requetes max
+#define BUFF_MAX 4 //Nombre d'octets du buffer
 
 void serveur_appli (char *service);   /* programme serveur */
 
@@ -62,12 +64,19 @@ void serveur_appli(char *service)
 /* Procedure correspondant au traitemnt du serveur de votre application */
 
 {
+	int num_sock = h_socket(AF_INET, IPPROTO_TCP);
 
-	int socket id = h_socket (,);
+	struct sockaddr_in *p_adr_socket;
+	h_bind(num_sock, p_adr_socket);
+	adr_socket("s_m", num_sock, SOCK_STREAM, p_adr_socket);
 
+	h_listen(num_sock, SOMAXCONN);
+	h_accept(num_sock, p_adr_socket);
 
+	char buffer[BUFF_MAX] ;
+	int received = h_reads(num_sock, buffer, BUFF_MAX);
 
-
+	printf("Received");
 
 }
 

@@ -68,9 +68,20 @@ void client_appli (char *serveur,char *service)
 /* procedure correspondant au traitement du client de votre application */
 
 {
-  
 
-/* a completer .....  */
+	int num_sock = h_socket(AF_INET, IPPROTO_TCP);
+
+	struct sockaddr_in *p_adr_socket;
+	h_bind(num_sock, p_adr_socket);
+	adr_socket("c_m", num_sock, SOCK_STREAM, p_adr_socket);
+
+	h_connect(num_sock, p_adr_socket);
+
+	printf("ici");
+	int error = h_writes(num_sock, "test", 4);
+	printf("%d", error);
+
+	h_close(num_sock);
 
  }
 
