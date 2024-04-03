@@ -69,14 +69,14 @@ void serveur_appli(char *service)
 {
 	int soc_serv = h_socket(AF_INET, SOCK_STREAM);
 
-	struct sockaddr_in *p_adr_serveur, *p_adr_client;
+	struct sockaddr_in *p_adr_serveur, p_adr_client;
 	adr_socket("2001", "0.0.0.0", SOCK_STREAM, &p_adr_serveur);
-	adr_socket("2000", "127.0.0.1", SOCK_STREAM, &p_adr_client);
+	//adr_socket("2000", "127.0.0.1", SOCK_STREAM, &p_adr_client);
 
 	h_bind(soc_serv, p_adr_serveur);
 
   h_listen(soc_serv, SOMAXCONN);
-	int soc_com = h_accept(soc_serv, p_adr_client);
+	int soc_com = h_accept(soc_serv, &p_adr_client);
 
 	char buffer[BUFF_MAX] ;
 	int read = h_reads(soc_com, buffer, BUFF_MAX);
@@ -85,8 +85,8 @@ void serveur_appli(char *service)
 	h_close(soc_com);
 	h_close(soc_serv);
 
-
 }
+
 
 /******************************************************************************/	
 
