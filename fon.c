@@ -240,7 +240,7 @@ void h_connect( int num_soc, struct sockaddr_in *p_adr_serv)
 /*==========================|  H_LISTEN  	|===============================*/
 /*			    +===================+				*/
 /*										*/
-/*	Met la socket en 2tat d'attente de demandes de connections		*/
+/*	Met la socket en État d'attente de demandes de connections		*/
 /*	Procedure reservee au serveur en mode connecte				*/
 /*										*/
 /* ENTREE									*/

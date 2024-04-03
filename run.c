@@ -29,7 +29,7 @@ void serveur_appli (char *service);   /* programme serveur */
 
 
 /******************************************************************************/	
-/*---------------- programme serveur ------------------------------*/
+/*---------------- programme run ------------------------------*/
 
 int main(int argc,char *argv[])
 {
@@ -61,30 +61,31 @@ int main(int argc,char *argv[])
 
 /******************************************************************************/	
 void serveur_appli(char *service)
-//service = SERVICE_DEFAUT//
-
-
-/* Procedure correspondant au traitemnt du serveur de votre application */
 
 {
 	int soc_serv = h_socket(AF_INET, SOCK_STREAM);
+	int soc_cli = h_socket(AF_INET, SOCK_STREAM);
 
 	struct sockaddr_in *p_adr_serveur, *p_adr_client;
 	adr_socket("2001", "0.0.0.0", SOCK_STREAM, &p_adr_serveur);
 	adr_socket("2000", "127.0.0.1", SOCK_STREAM, &p_adr_client);
 
 	h_bind(soc_serv, p_adr_serveur);
-
+  
   h_listen(soc_serv, SOMAXCONN);
-	int soc_com = h_accept(soc_serv, p_adr_client);
+  h_connect(soc_cli, p_adr_serveur);
+  int soc_com = h_accept(soc_serv, p_adr_client);
+
+  char Message[] = "abcd";
+	int error = h_writes(soc_com, Message, BUFF_MAX);
+  printf("Nb octets écrits: %i\n", error);
+
 
 	char buffer[BUFF_MAX] ;
 	int read = h_reads(soc_com, buffer, BUFF_MAX);
   printf("Nb octets lus: %i\n", read);
   printf("Message recu: %s\n", buffer);
 	h_close(soc_com);
-	h_close(soc_serv);
-
 
 }
 

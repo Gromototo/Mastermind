@@ -21,6 +21,7 @@
 
 #define SERVICE_DEFAUT "1111"
 #define SERVEUR_DEFAUT "127.0.0.1"
+#define BUFF_MAX 4 //Nombre d'octets du buffer
 
 void client_appli (char *serveur, char *service);
 
@@ -69,19 +70,20 @@ void client_appli (char *serveur,char *service)
 
 {
 
-	int num_sock = h_socket(AF_INET, IPPROTO_TCP);
+	int soc_cli = h_socket(AF_INET, SOCK_STREAM);
 
-	struct sockaddr_in *p_adr_socket;
-	h_bind(num_sock, p_adr_socket);
-	adr_socket("c_m", num_sock, SOCK_STREAM, p_adr_socket);
+	struct sockaddr_in *p_adr_serveur, *p_adr_client;
+	adr_socket("2001", "0.0.0.0", SOCK_STREAM, &p_adr_serveur);
+	adr_socket("2000", "127.0.0.1", SOCK_STREAM, &p_adr_client);
 
-	h_connect(num_sock, p_adr_socket);
+	h_connect(soc_cli, p_adr_serveur);
 
-	printf("ici");
-	int error = h_writes(num_sock, "test", 4);
-	printf("%d", error);
+  char Message[] = "abcd";
+	int error = h_writes(soc_cli, Message, BUFF_MAX);
+  printf("Nb octets écrits: %i\n", error);
 
-	h_close(num_sock);
+
+	h_close(soc_cli);
 
  }
 
