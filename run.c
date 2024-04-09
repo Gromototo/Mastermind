@@ -20,6 +20,7 @@
 
 //remettre fon.h
 #include "fon.h"     		/* Primitives de la boite a outils */
+#include "mastermind.h"
 
 #define SERVICE_DEFAUT "1111"
 #define NB_REQ_MAX 100//Nombre de requetes max
