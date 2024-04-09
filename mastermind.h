@@ -5,7 +5,7 @@ char * sequence(int n, int m, char *tab);
 //calculer le poids d'une sequence de n chiffres entre 0 et m-1 (nombre de chaque couleurs dans la sequence)
 //par exemple si n=4, m=6 et sequence = 0014, poids = 2 1 0 0 1 0
 
-char* poids(int n, int m, char *sequence, char *poids);
+char* calcul_poids(int n, int m, char *sequence, char *poids);
 
 //comparer deux sequences de n chiffres entre 0 et m-1 et leur poids respectif
 //retourne le nombre de chiffres bien placés et mal placés

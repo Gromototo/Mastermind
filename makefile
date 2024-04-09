@@ -1,6 +1,6 @@
 
-OBJ1 = fon.o client.o 
-OBJ2 = fon.o serveur.o 
+OBJ1 = fon.o client.o mastermind.o
+OBJ2 = fon.o serveur.o mastermind.o
 OBJ3 = fon.o run.o 
 
 OPTIONS	=
@@ -44,6 +44,10 @@ client.o : fon.h	client.c
 
 serveur.o : 	serveur.c  #fon.h
 	gcc  $(CFLAGS) -c  serveur.c	
+
+mastermind.o : 	mastermind.c  #fon.h
+	gcc  $(CFLAGS) -c  mastermind.c
+
 
 client : ${OBJ1}	
 	gcc $(LFLAGS) ${OBJ1} -g -o client -lcurses   $(OPTIONS)
