@@ -20,11 +20,10 @@
 
 //remettre fon.h
 #include "fon.h"     		/* Primitives de la boite a outils */
-#include "mastermind.h"
 
 #define SERVICE_DEFAUT "1111"
 #define NB_REQ_MAX 100//Nombre de requetes max
-#define BUFF_MAX 8 //Nombre d'octets du buffer
+#define BUFF_MAX 4 //Nombre d'octets du buffer
 
 void serveur_appli (char *service);   /* programme serveur */
 

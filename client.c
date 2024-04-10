@@ -98,6 +98,7 @@ tant que le jeu n'est pas fini
 fin tant que
 */
 char code[4];
+char reponse[2];
 
 for (int i = 0; i < 2; i++)
 {
@@ -108,7 +109,7 @@ for (int i = 0; i < 2; i++)
 	//attendre la reponse du serveur
 
 	//afficher la reponse
-
+	printf("Bien placé: %d, Mal placé: %d\n", reponse[0], reponse[1]);
 }
 
 
