@@ -20,10 +20,11 @@
 
 //remettre fon.h
 #include "fon.h"     		/* Primitives de la boite a outils */
+#include "mastermind.h"
 
 #define SERVICE_DEFAUT "1111"
 #define NB_REQ_MAX 100//Nombre de requetes max
-#define BUFF_MAX 4 //Nombre d'octets du buffer
+#define BUFF_MAX 8 //Nombre d'octets du buffer
 
 void serveur_appli (char *service);   /* programme serveur */
 
@@ -85,8 +86,38 @@ void serveur_appli(char *service)
 	h_close(soc_com);
 	h_close(soc_serv);
 
+/*--------------jeu------------------
+generer un code secret
+calculer poids du code secret
+
+tant que jeu pas fini
+	attendre proposition
+	calculer poids de la proposition
+	renvoie de la reponse
+fin tant que
+-----------------------------------
+	*/
+char code[4];
+char poids[6];
+char proposition[4];
+char poids_proposition[6];
+char reponse[2];
+init(4, 6, code, poids);
+int nombre_de_tours = 2;
+for (int i = 0; i < nombre_de_tours; i++)
+{
+	//attendre proposition
+
+	//calculer poids de la proposition
+	calcul_poids(4, 6, proposition, poids_proposition);
+
+	compare(4, proposition, poids_proposition, code, poids,reponse);
+	//renvoie de la reponse
+
 }
 
+
+}
 
 /******************************************************************************/	
 
