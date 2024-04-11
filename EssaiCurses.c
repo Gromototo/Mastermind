@@ -8,7 +8,7 @@
 main()
 {
 	WINDOW *W1, *L1, *W2, *L2, *C;
-  	pid_t PID;
+  pid_t PID;
  	int SZ ; /* taille d'un cadre */
  	char CAR ;
 	

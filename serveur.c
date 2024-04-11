@@ -22,6 +22,8 @@
 #include "fon.h"     		/* Primitives de la boite a outils */
 #include "mastermind.h"
 
+#include <stdlib.h>
+
 #define SERVICE_DEFAUT "1111"
 #define NB_REQ_MAX 100//Nombre de requetes max
 #define BUFF_MAX 8 //Nombre d'octets du buffer
@@ -79,12 +81,7 @@ void serveur_appli(char *service)
   h_listen(soc_serv, SOMAXCONN);
 	int soc_com = h_accept(soc_serv, &p_adr_client);
 
-	char buffer[BUFF_MAX] ;
-	int read = h_reads(soc_com, buffer, BUFF_MAX);
-  printf("Nb octets lus: %i\n", read);
-  printf("Message recu: %s\n", buffer);
-	h_close(soc_com);
-	h_close(soc_serv);
+
 
 /*--------------jeu------------------
 generer un code secret
@@ -99,24 +96,43 @@ fin tant que
 	*/
 char code[4];
 char poids[6];
-char proposition[4];
 char poids_proposition[6];
+
+for (int i  = 0; i < 6; i++)
+{
+	poids[i] = 0;
+	poids_proposition[i] = 0;
+}
+
+char proposition[4];
 char reponse[2];
 init(4, 6, code, poids);
 int nombre_de_tours = 2;
+
+printf("code: %d %d %d %d\n", code[0], code[1], code[2], code[3]);
+
 for (int i = 0; i < nombre_de_tours; i++)
 {
 	//attendre proposition
+	h_reads(soc_com, proposition, 4);
+	printf("proposition: %d %d %d %d\n", proposition[0], proposition[1], proposition[2], proposition[3]);
 
 	//calculer poids de la proposition
 	calcul_poids(4, 6, proposition, poids_proposition);
 
+	printf("poids proposition: %d %d %d %d %d %d\n", poids_proposition[0], poids_proposition[1], poids_proposition[2], poids_proposition[3], poids_proposition[4], poids_proposition[5]);
+
 	compare(4, proposition, poids_proposition, code, poids,reponse);
+
+	printf("\n response: %d %d\n", reponse[0], reponse[1]);
 	//renvoie de la reponse
+	h_writes(soc_com, reponse, 2);
+
 
 }
 
-
+	h_close(soc_com);
+	h_close(soc_serv);
 }
 
 /******************************************************************************/	

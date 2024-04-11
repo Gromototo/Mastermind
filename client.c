@@ -79,13 +79,6 @@ void client_appli (char *serveur,char *service)
 
 	h_connect(soc_cli, p_adr_serveur);
 
-  char Message[6];
-  scanf("%s",Message);
-	int error = h_writes(soc_cli, Message, BUFF_MAX);
-  printf("Nb octets écrits: %i\n", error);
-
-
-	h_close(soc_cli);
 
 
 
@@ -97,6 +90,7 @@ tant que le jeu n'est pas fini
 	afficher la reponse
 fin tant que
 */
+
 char code[4];
 char reponse[2];
 
@@ -104,13 +98,18 @@ for (int i = 0; i < 2; i++)
 {
 	recuperer(4, 6, code);
 
-	//envoie le code au serveur
+	printf("Proposition: %d %d %d %d\n", code[0], code[1], code[2], code[3]);
 
+	//envoie le code au serveur
+	h_writes(soc_cli, code, 4);
 	//attendre la reponse du serveur
+	h_reads(soc_cli, reponse, 2);
 
 	//afficher la reponse
 	printf("Bien placé: %d, Mal placé: %d\n", reponse[0], reponse[1]);
 }
+
+h_close(soc_cli);
 
 
 // 	int jeu =1;
