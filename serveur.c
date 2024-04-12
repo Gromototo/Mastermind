@@ -122,7 +122,7 @@ for (int i = 0; i < nombre_de_tours; i++)
 
 	printf("poids proposition: %d %d %d %d %d %d\n", poids_proposition[0], poids_proposition[1], poids_proposition[2], poids_proposition[3], poids_proposition[4], poids_proposition[5]);
 
-	compare(4, proposition, poids_proposition, code, poids,reponse);
+	compare(4, 6, proposition, poids_proposition, code, poids, reponse);
 
 	printf("\n response: %d %d\n", reponse[0], reponse[1]);
 	//renvoie de la reponse

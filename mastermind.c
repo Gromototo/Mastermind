@@ -39,7 +39,7 @@ void calcul_poids(int n, int m, char *sequence, char *poids){
 //comparer deux sequences de n chiffres entre 0 et m-1 et leur poids respectif
 //retourne le nombre de chiffres bien placés et mal placés
 //par exemple si n=4, m=6, sequence1 = 0014, poids1 = 2 1 0 0 1 0, sequence2 = 0210, poids2 = 2 1 1 0 0 0
-void compare(int n, char *sequence, char *poids, char *sequence2, char *poids2,char *reponse){
+void compare(int n, int m, char *sequence, char *poids, char *sequence2, char *poids2,char *reponse){
     int i;
     char place = 0;
     char couleur = 0;
@@ -47,12 +47,15 @@ void compare(int n, char *sequence, char *poids, char *sequence2, char *poids2,c
         if(sequence[i] == sequence2[i]){
             place++;
         }
-        couleur += min(poids[sequence2[i]], poids2[sequence2[i]]);
+    }
 
-        printf("poids1: %d, poids2: %d\n", poids[sequence2[i]], poids2[sequence2[i]]); 
+
+    for (int y =0; y < m; y++){
+        couleur += min(poids[y], poids2[y]);
+        printf("poids1: %d, poids2: %d\n", poids[i], poids2[i]); 
     }
     reponse[0] = place;
-    reponse[1] = couleur;
+    reponse[1] = couleur - place;
 
     printf("place: %d, couleur: %d\n", place, couleur);
 }
@@ -70,11 +73,13 @@ void afficher(int n, char *sequence){
 //recuper une sequence de n chiffres entre 0 et m-1
 
 void recuperer(int n,int m, char *sequence){
-    int i;
     printf("Entrez une sequence de %d chiffres entre 0 et %d\n", n, m-1);
-    for(i=0; i<n; i++){
-        scanf("%c", &sequence[i]);
-        sequence[i] -= '0';
+
+    int i = 0;
+    char c;
+    while ((c = getchar()) != '\n' & i < n){;
+        sequence[i] = c - '0';
+        i++;
     }
 }
 
