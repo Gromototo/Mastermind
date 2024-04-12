@@ -90,24 +90,43 @@ tant que le jeu n'est pas fini
 	afficher la reponse
 fin tant que
 */
+char NB_COULEURS = 8;
 
-char code[4];
+
+char difficulty;
+
+printf("Choisissez la difficulté de 1 à 9\n");
+recuperer(1, 10, &difficulty);
+h_writes(soc_cli, &difficulty, 1);
+
+char code[difficulty];
 char reponse[2];
 
-for (int i = 0; i < 2; i++)
+for (int i = 0; i < 18; i++)
 {
+	printf("Entrez une sequence de %d chiffres entre 0 et %d\n", difficulty, NB_COULEURS-1);
 	recuperer(4, 6, code);
 
-	printf("Proposition: %d %d %d %d\n", code[0], code[1], code[2], code[3]);
 
 	//envoie le code au serveur
-	h_writes(soc_cli, code, 4);
+	h_writes(soc_cli, code, difficulty);
 	//attendre la reponse du serveur
 	h_reads(soc_cli, reponse, 2);
 
-	//afficher la reponse
-	printf("Bien placé: %d, Mal placé: %d\n", reponse[0], reponse[1]);
+
+	if (reponse[0] == difficulty)
+	{
+		printf("Vous avez gagné\n");
+		break;
+	}
+	else {
+		//afficher la reponse
+		printf("Bien placé: %d, Mal placé: %d\n", reponse[0], reponse[1]);
+
+	}
 }
+
+printf("FIN DE LA PARTIE \n");
 
 h_close(soc_cli);
 

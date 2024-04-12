@@ -94,45 +94,60 @@ tant que jeu pas fini
 fin tant que
 -----------------------------------
 	*/
-char code[4];
-char poids[6];
-char poids_proposition[6];
 
-for (int i  = 0; i < 6; i++)
+char difficulty;
+h_reads(soc_com, &difficulty, 1);
+printf("difficulty: %d\n", difficulty);
+
+
+char NB_COULEURS = 8;
+char code[4];
+char poids[NB_COULEURS];
+char poids_proposition[NB_COULEURS];
+char proposition[difficulty];
+char reponse[2];
+
+for (int i  = 0; i < NB_COULEURS; i++)
 {
 	poids[i] = 0;
 	poids_proposition[i] = 0;
 }
 
-char proposition[4];
-char reponse[2];
-init(4, 6, code, poids);
-int nombre_de_tours = 2;
+init(difficulty, NB_COULEURS, code, poids);
+int nombre_de_tours = 18;
 
-printf("code: %d %d %d %d\n", code[0], code[1], code[2], code[3]);
+
+printf("code: ");
+for (int i= 0; i < difficulty; i++)
+{
+	printf(" %d ", code[i]);
+}
+printf("\n");
 
 for (int i = 0; i < nombre_de_tours; i++)
 {
 	//attendre proposition
-	h_reads(soc_com, proposition, 4);
-	printf("proposition: %d %d %d %d\n", proposition[0], proposition[1], proposition[2], proposition[3]);
+	h_reads(soc_com, proposition, difficulty);
 
 	//calculer poids de la proposition
-	calcul_poids(4, 6, proposition, poids_proposition);
+	calcul_poids(difficulty, NB_COULEURS, proposition, poids_proposition);
 
-	printf("poids proposition: %d %d %d %d %d %d\n", poids_proposition[0], poids_proposition[1], poids_proposition[2], poids_proposition[3], poids_proposition[4], poids_proposition[5]);
 
-	compare(4, 6, proposition, poids_proposition, code, poids, reponse);
+	compare(difficulty, NB_COULEURS, proposition, poids_proposition, code, poids, reponse);
 
 	printf("\n response: %d %d\n", reponse[0], reponse[1]);
 	//renvoie de la reponse
 	h_writes(soc_com, reponse, 2);
 
-
+	if (reponse[0] == difficulty)
+	{
+		printf("Partie Gagnée en %d tentatives \n", i);
+		break;
+	}
 }
 
-	h_close(soc_com);
-	h_close(soc_serv);
+h_close(soc_com);
+h_close(soc_serv);
 }
 
 /******************************************************************************/	

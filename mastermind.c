@@ -73,8 +73,6 @@ void afficher(int n, char *sequence){
 //recuper une sequence de n chiffres entre 0 et m-1
 
 void recuperer(int n,int m, char *sequence){
-    printf("Entrez une sequence de %d chiffres entre 0 et %d\n", n, m-1);
-
     int i = 0;
     char c;
     while ((c = getchar()) != '\n' & i < n){;
