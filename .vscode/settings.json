@@ -3,6 +3,8 @@
         "*.c": "c",
         "curses.h": "c",
         "signal.h": "c",
-        "wait.h": "c"
+        "wait.h": "c",
+        "stdlib.h": "c",
+        "__locale": "c"
     }
 }

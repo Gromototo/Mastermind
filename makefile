@@ -35,9 +35,8 @@ EXEC = ${OBJ1} client ${OBJ2} serveur ${OBJ3} run
 all: ${EXEC} 	
 
 
-fon.o :  fon.h fon.c
-	gcc -DDEBUG -c fon.c
-	#gcc -c fon.c
+fon.o :  fon.h fon.c #-DDEBUG
+	gcc  -c fon.c	
 
 client.o : fon.h	client.c 
 	gcc  $(CFLAGS) -c  client.c	

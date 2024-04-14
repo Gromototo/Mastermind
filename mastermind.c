@@ -30,8 +30,6 @@ void calcul_poids(int n, int m, char *sequence, char *poids){
     int i;
     for(i=0; i<n; i++){
         poids[sequence[i]] += 1;
-
-        printf("poids : %d %d %d %d %d %d\n", poids[0], poids[1], poids[2], poids[3], poids[4], poids[5]);
     }
 
 }
@@ -52,12 +50,10 @@ void compare(int n, int m, char *sequence, char *poids, char *sequence2, char *p
 
     for (int y =0; y < m; y++){
         couleur += min(poids[y], poids2[y]);
-        printf("poids1: %d, poids2: %d\n", poids[i], poids2[i]); 
     }
     reponse[0] = place;
     reponse[1] = couleur - place;
 
-    printf("place: %d, couleur: %d\n", place, couleur);
 }
 
 //afficher une sequence de n chiffres entre 0 et m-1

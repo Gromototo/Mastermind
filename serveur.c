@@ -1,13 +1,12 @@
 /******************************************************************************/
-/*			Application: ....			              */
+/*			Application: SERVEUR MASTERMIND			              */
 /******************************************************************************/
 /*									      */
 /*			 programme  SERVEUR 				      */
 /*									      */
 /******************************************************************************/
 /*									      */
-/*		Auteurs :  ....						      */
-/*		Date :  ....						      */
+/*		Auteurs :  LEITAO--PEREIRA DIAS Rodrigue						      */
 /*									      */
 /******************************************************************************/	
 
@@ -66,10 +65,12 @@ int main(int argc,char *argv[])
 void serveur_appli(char *service)
 //service = SERVICE_DEFAUT//
 
-
-/* Procedure correspondant au traitemnt du serveur de votre application */
-
 {
+
+	/*
+		Procédure de démarrage du serveur
+	*/
+
 	int soc_serv = h_socket(AF_INET, SOCK_STREAM);
 
 	struct sockaddr_in *p_adr_serveur, p_adr_client;
@@ -83,7 +84,7 @@ void serveur_appli(char *service)
 
 
 
-/*--------------jeu------------------
+/*--------------Mastermind------------------
 generer un code secret
 calculer poids du code secret
 
@@ -95,18 +96,21 @@ fin tant que
 -----------------------------------
 	*/
 
+
+//choix de la difficulté par le client
 char difficulty;
 h_reads(soc_com, &difficulty, 1);
-printf("difficulty: %d\n", difficulty);
-
 
 char NB_COULEURS = 8;
+int NB_TOURS = 12;
 char code[4];
 char poids[NB_COULEURS];
 char poids_proposition[NB_COULEURS];
 char proposition[difficulty];
 char reponse[2];
 
+
+//initialisation des tableaux de poids
 for (int i  = 0; i < NB_COULEURS; i++)
 {
 	poids[i] = 0;
@@ -114,9 +118,9 @@ for (int i  = 0; i < NB_COULEURS; i++)
 }
 
 init(difficulty, NB_COULEURS, code, poids);
-int nombre_de_tours = 18;
 
 
+//vérification et debug du code secret
 printf("code: ");
 for (int i= 0; i < difficulty; i++)
 {
@@ -124,7 +128,7 @@ for (int i= 0; i < difficulty; i++)
 }
 printf("\n");
 
-for (int i = 0; i < nombre_de_tours; i++)
+for (int i = 0; i < NB_TOURS; i++)
 {
 	//attendre proposition
 	h_reads(soc_com, proposition, difficulty);
@@ -132,16 +136,15 @@ for (int i = 0; i < nombre_de_tours; i++)
 	//calculer poids de la proposition
 	calcul_poids(difficulty, NB_COULEURS, proposition, poids_proposition);
 
-
+	//calcul des infromations à renvoyer
 	compare(difficulty, NB_COULEURS, proposition, poids_proposition, code, poids, reponse);
 
-	printf("\n response: %d %d\n", reponse[0], reponse[1]);
 	//renvoie de la reponse
 	h_writes(soc_com, reponse, 2);
 
 	if (reponse[0] == difficulty)
 	{
-		printf("Partie Gagnée en %d tentatives \n", i);
+		printf("Partie Gagnée en %d tentatives \n", i+1);
 		break;
 	}
 }

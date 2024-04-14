@@ -1,12 +1,12 @@
 /******************************************************************************/
-/*			Application: ...					*/
+/*			Application: CLIENT MASTERMIND								*/
 /******************************************************************************/
 /*									      */
 /*			 programme  CLIENT				      */
 /*									      */
 /******************************************************************************/
 /*									      */
-/*		Auteurs : ... 					*/
+/*		Auteurs : LEITAO--PEREIRA DIAS Rodrigue					 					*/
 /*									      */
 /******************************************************************************/	
 
@@ -22,7 +22,6 @@
 
 #define SERVICE_DEFAUT "1111"
 #define SERVEUR_DEFAUT "127.0.0.1"
-#define BUFF_MAX 8 //Nombre d'octets du buffer
 
 void client_appli (char *serveur, char *service);
 
@@ -91,7 +90,7 @@ tant que le jeu n'est pas fini
 fin tant que
 */
 char NB_COULEURS = 8;
-
+char NB_TOURS = 12;
 
 char difficulty;
 
@@ -102,7 +101,7 @@ h_writes(soc_cli, &difficulty, 1);
 char code[difficulty];
 char reponse[2];
 
-for (int i = 0; i < 18; i++)
+for (int i = 0; i < NB_TOURS; i++)
 {
 	printf("Entrez une sequence de %d chiffres entre 0 et %d\n", difficulty, NB_COULEURS-1);
 	recuperer(4, 6, code);
@@ -110,36 +109,27 @@ for (int i = 0; i < 18; i++)
 
 	//envoie le code au serveur
 	h_writes(soc_cli, code, difficulty);
+
 	//attendre la reponse du serveur
 	h_reads(soc_cli, reponse, 2);
 
 
 	if (reponse[0] == difficulty)
 	{
-		printf("Vous avez gagné\n");
-		break;
+		printf("Vous avez gagné en %d tentatives \n", i+1);
+		h_close(soc_cli);
+		return;
 	}
 	else {
 		//afficher la reponse
-		printf("Bien placé: %d, Mal placé: %d\n", reponse[0], reponse[1]);
+		printf("couleurs bien placées: %d, bonnes couleurs mal placées: %d\n", reponse[0], reponse[1]);
 
 	}
 }
 
-printf("FIN DE LA PARTIE \n");
-
+printf("VOUS AVEZ PERDU \n");
 h_close(soc_cli);
-
-
-// 	int jeu =1;
-// while (jeu)
-// {
-// 	char Message[6];
-// 	scanf( "%s", Message );;
-// 	int error = h_writes(soc_cli, Message, BUFF_MAX);
-//   printf("Nb octets écrits: %i\n", error);
-//   h_close(soc_cli);
-// }
+return;
  }
 
 /*****************************************************************************/
